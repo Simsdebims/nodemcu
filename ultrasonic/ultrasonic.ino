@@ -1,8 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
-// Update these with values suitable for your network.
-
 const char* ssid = "Sonnendeck";
 const char* password = "Vjemwdbnk5yb";
 const char* mqtt_server = "10.42.0.1";
@@ -11,8 +9,6 @@ const char* topic = "sensoren/aussen/test";
 WiFiClient espClient;
 PubSubClient client(espClient);
 long lastMsg = 0;
-char msg[50];
-int value = 0;
 
 long duration;
 double distance;
@@ -93,8 +89,6 @@ void loop() {
   long now = millis();
   if (now - lastMsg > 2000) {
     lastMsg = now;
-    ++value;
-    snprintf (msg, 75, "%ld", value);
     Serial.print("Publish message: ");
     Serial.println(distance_msg);
     client.publish(topic, distance_msg.c_str());
